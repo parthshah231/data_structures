@@ -12,28 +12,31 @@ class LinkedList:
     def __init__(self) -> None:
         self.head: Optional[Node] = None
 
-    def append(self, value: int):
+    def append(self, value: int) -> None:
         new: Node = Node(value=value)
         if self.head is None:
             self.head = new
             return
 
-        node = self.head
+        node: Node = self.head
         while node.next is not None:
             node = node.next
         node.next = new
 
-    def remove(self, idx: int):
+    def remove(self, idx: int) -> None:
         if self.head is None:
-            return
+            raise IndexError(f"{idx} is out of bounds")
 
         if idx == 0:
-            self.head = self.head.next
+            if self.head.next is None:
+                self.head = None
+            else:
+                self.head = self.head.next
             return
 
+        i = 0
         node: Node = self.head
         prev_node: Node = None
-        i = 0
 
         while node.next is not None and i < idx:
             prev_node = node
@@ -41,16 +44,17 @@ class LinkedList:
             i += 1
 
         if node is None:
-            raise ValueError(f"Index {idx} is out of bounds of the linked list")
+            raise IndexError(f"{idx} is out of bounds")
 
         prev_node.next = node.next
 
     def __str__(self) -> str:
-        node = self.head
-        if node is None:
+        if self.head is None:
             return "[[]]"
 
+        node: Node = self.head
         fmt = ["[["]
+
         while node.next is not None:
             fmt.append(f"{node.value}, ")
             node = node.next
@@ -62,10 +66,14 @@ class LinkedList:
 if __name__ == "__main__":
     ll = LinkedList()
     ll.append(value=1)
+    print(ll)
+    ll.remove(idx=0)
+    print(ll)
     ll.append(value=2)
     ll.append(value=3)
-    ll.remove(idx=1)
+    ll.remove(idx=0)
     ll.append(value=4)
+    ll.append(value=5)
     ll.remove(idx=1)
     ll.remove(idx=1)
     print(ll)
