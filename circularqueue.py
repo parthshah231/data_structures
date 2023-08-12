@@ -1,42 +1,39 @@
+from typing import Any
+
+
 class CircularQueue:
-    def __init__(self, size: int) -> None:
+    def __init__(self, size: Any) -> None:
         self.size = size
         self.queue = [None] * size
         self.front = self.rear = -1
 
-    def enqueue(self, value):
+    def enqueue(self, value) -> None:
         if self.rear == self.size - 1:
             print(f"Queue is full. Cannot add {value} to the queue.")
-            return
-
-        if self.front == -1:
+        elif self.front == -1:
             self.front = self.rear = 0
         else:
             self.rear = (self.rear + 1) % self.size
         self.queue[self.rear] = value
 
-    def dequeue(self):
+    def dequeue(self) -> None:
         if self.front == -1:
             print("Queue is empty.")
             return
         elif self.front == self.rear:
-            # temp = self.queue[self.front]
             self.front = self.rear = -1
         else:
-            # temp = self.queue[self.front]
             self.front = (self.front + 1) % self.size
 
-        # return temp
-
-    def peek(self):
+    def peek(self) -> Any:
         if self.front == -1:
             print("Queue is empty.")
             return
         return self.queue[self.front]
 
-    def __str__(self):
+    def __str__(self) -> str:
         if self.front == -1:
-            return "Queue is empty!"
+            return "Queue is empty."
 
         i = self.front
         queue = []
