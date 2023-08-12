@@ -32,19 +32,18 @@ class LinkedList:
             return
 
         node: Node = self.head
+        prev_node: Node = None
         i = 0
 
-        while node.next is not None and i < idx - 1:
+        while node.next is not None and i < idx:
+            prev_node = node
             node = node.next
             i += 1
 
-        if node.next is None:
+        if node is None:
             raise ValueError(f"Index {idx} is out of bounds of the linked list")
 
-        if node.next.next is not None:
-            node.next = node.next.next
-        else:
-            node.next = None
+        prev_node.next = node.next
 
     def __str__(self) -> str:
         node = self.head
@@ -67,5 +66,6 @@ if __name__ == "__main__":
     ll.append(value=3)
     ll.remove(idx=1)
     ll.append(value=4)
+    ll.remove(idx=1)
     ll.remove(idx=1)
     print(ll)
