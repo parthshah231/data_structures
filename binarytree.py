@@ -11,8 +11,14 @@ class TreeNode:
         self.right = None
 
 
-def insert():
-    pass
+def insert(root, val):
+    if root is None:
+        return TreeNode(val=val)
+    if root.val > val:
+        root.left = insert(root.left, val)
+    else:
+        root.right = insert(root.right, val)
+    return root
 
 
 def findMinValue(root):
@@ -41,6 +47,34 @@ def mergeTrees(root1, root2):
     return s
 
 
+def sumTreeNodes(root):
+    if root is None:
+        return 0
+    return root.val + root.left.val + root.right.val
+
+
+def isSymmetricHelper(left, right):
+    if left is None and right is None:
+        return True
+
+    if left is None or right is None:
+        return False
+
+    if left.val != right.val:
+        return False
+
+    return isSymmetricHelper(left.left, right.right) and isSymmetricHelper(
+        left.right, right.left
+    )
+
+
+def isSymmetric(root):
+    if not root:
+        return True
+
+    return isSymmetricHelper(root.left, root.right)
+
+
 def display(root, traversal_type="bfs"):
     if root is None:
         print("Empty tree.")
@@ -61,6 +95,8 @@ def display(root, traversal_type="bfs"):
 
 if __name__ == "__main__":
     root = TreeNode(-1)
+    root.left = TreeNode(2)
+    root.right = TreeNode(2)
 
     node1 = TreeNode(1)
     node2 = TreeNode(2)
@@ -77,5 +113,7 @@ if __name__ == "__main__":
     node4.right = node6
 
     # print(findMinValue(root))
-    x = mergeTrees(node1, node4)
-    display(x)
+    # x = mergeTrees(node1, node4)
+    # display(x)
+    # print(sumTreeNodes(node4))
+    print(isSymmetric(root))
